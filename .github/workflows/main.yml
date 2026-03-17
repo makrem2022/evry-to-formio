@@ -1,26 +1,25 @@
 
--# Create the Angular app
--npm install -g @angular/cli
--ng new evry-to-formio --standalone --routing --style=scss
--cd evry-to-formio
+# Create the Angular app
+npm install -g @angular/cli
+ng new evry-to-formio --standalone --routing --style=scss
+cd evry-to-formio
 
  
--# Install dependencies
--npm install xlsx pdfjs-dist mammoth tesseract.js file-saver
+# Install dependencies
+npm install xlsx pdfjs-dist mammoth tesseract.js file-saver
 
  
--# Use Codex in this repo
--npm i -g @openai/codex
--codex
+# Use Codex in this repo
+npm i -g @openai/codex
+codex
 
  
--# After Codex has generated and refined the project
--npm test
--npm run build
+# After Codex has generated and refined the project
+npm test
+npm run build
 
 
--gh repo create evry-to-formio --public --source=. --remote=origin --push
-
+gh repo create evry-to-formio --public --source=. --remote=origin --push
  
 EOF
 )
