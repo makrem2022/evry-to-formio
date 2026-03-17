@@ -1,0 +1,57 @@
+<div class="page">
+  <header><h1>evry-to-formio</h1></header>
+
+  <section class="upload" (drop)="onDrop($event)" (dragover)="onDragOver($event)">
+    <p>Drop XLS/XLSX, DOCX, or PDF file here</p>
+    <input type="file" accept=".xls,.xlsx,.docx,.pdf" (change)="onFileSelected($event)" />
+  </section>
+
+  <section class="settings">
+    <label><input type="checkbox" [checked]="settings().useDataValidation" (change)="setFlag('useDataValidation', $event)" /> Use data validation</label>
+    <label><input type="checkbox" [checked]="settings().useFormulas" (change)="setFlag('useFormulas', $event)" /> Use formulas</label>
+    <label><input type="checkbox" [checked]="settings().detectRequiredFromStyle" (change)="setFlag('detectRequiredFromStyle', $event)" /> Detect required from style</label>
+    <label><input type="checkbox" [checked]="settings().useOcrFallback" (change)="setFlag('useOcrFallback', $event)" /> OCR fallback for scanned PDFs</label>
+    <label><input type="checkbox" [checked]="settings().wizardForMultiSheet" (change)="setFlag('wizardForMultiSheet', $event)" /> Wizard mode for multi-sheet Excel</label>
+  </section>
+
+  @if (busy()) { <p>Converting...</p> }
+  @if (error()) { <p class="error">{{ error() }}</p> }
+
+  @if (result(); as r) {
+    <section class="stats">
+      <article>Components: <strong>{{ r.stats.generatedComponents }}</strong></article>
+      <article>Validations: <strong>{{ r.stats.validations }}</strong></article>
+      <article>Formulas: <strong>{{ r.stats.formulas }}</strong></article>
+      <article>Required: <strong>{{ r.stats.requiredFields }}</strong></article>
+    </section>
+
+    <nav class="tabs">
+      <button (click)="selectedTab.set('summary')">Summary</button>
+      <button (click)="selectedTab.set('tree')">Tree</button>
+      <button (click)="selectedTab.set('json')">JSON</button>
+      <button (click)="selectedTab.set('raw')">Raw extracted</button>
+    </nav>
+
+    <section class="panel">
+      @if (selectedTab() === 'summary') {
+        <p>Source: {{ r.normalized.sourceType }}</p>
+        <p>Title: {{ r.normalized.title }}</p>
+        <ul>@for (w of r.warnings; track w) { <li>{{ w }}</li> }</ul>
+      }
+      @if (selectedTab() === 'tree') {
+        <pre>{{ r.normalized | json }}</pre>
+      }
+      @if (selectedTab() === 'json') {
+        <div class="actions">
+          <button (click)="copyJson()">Copy JSON</button>
+          <button (click)="downloadJson()">Download JSON</button>
+        </div>
+        <pre>{{ r.formio | json }}</pre>
+      }
+      @if (selectedTab() === 'raw') {
+        <pre>{{ r.extracted | json }}</pre>
+      }
+    </section>
+    <small>Limitations: deterministic heuristics may miss complex layouts.</small>
+  }
+</div>
