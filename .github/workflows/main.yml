@@ -1,9 +1,9 @@
  (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 18d796738f2f313265d95aa0c1a5abf008aca1f7..25a97e99c0833985d0c4d127711d3689d8cc5255 100644
+index 18d796738f2f313265d95aa0c1a5abf008aca1f7..b537b6b37dec5e525a5a1553017b65ccb9f6e6e3 100644
 --- a/.github/workflows/main.yml
 +++ b/.github/workflows/main.yml
-@@ -1,19 +1,30 @@
+@@ -1,19 +1,31 @@
 -# Create the Angular app
 -npm install -g @angular/cli
 -ng new evry-to-formio --standalone --routing --style=scss
@@ -17,6 +17,7 @@ index 18d796738f2f313265d95aa0c1a5abf008aca1f7..25a97e99c0833985d0c4d127711d3689
 +    branches:
 +      - main
 +  pull_request:
++  workflow_dispatch:
  
 -# Use Codex in this repo
 -npm i -g @openai/codex
