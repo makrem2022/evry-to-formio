@@ -12,44 +12,21 @@ index 18d796738f2f313265d95aa0c1a5abf008aca1f7..b537b6b37dec5e525a5a1553017b65cc
  
 -# Install dependencies
 -npm install xlsx pdfjs-dist mammoth tesseract.js file-saver
-+on:
-+  push:
-+    branches:
-+      - main
-+  pull_request:
-+  workflow_dispatch:
+
  
 -# Use Codex in this repo
 -npm i -g @openai/codex
 -codex
-+jobs:
-+  test-and-build:
-+    runs-on: ubuntu-latest
+
  
 -# After Codex has generated and refined the project
 -npm test
 -npm run build
-+    steps:
-+      - name: Checkout
-+        uses: actions/checkout@v4
- 
+
 -# Publish to GitHub
 -# Option A: GitHub CLI
 -gh repo create evry-to-formio --public --source=. --remote=origin --push
-+      - name: Setup Node.js
-+        uses: actions/setup-node@v4
-+        with:
-+          node-version: 22
-+          cache: npm
-+
-+      - name: Install dependencies
-+        run: npm install
-+
-+      - name: Run tests
-+        run: npm test -- --watch=false --browsers=ChromeHeadless
-+
-+      - name: Build
-+        run: npm run build -- --configuration production
+
  
 EOF
 )
