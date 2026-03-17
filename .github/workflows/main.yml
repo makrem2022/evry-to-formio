@@ -1,19 +1,30 @@
-# Create the Angular app
-npm install -g @angular/cli
-ng new evry-to-formio --standalone --routing --style=scss
-cd evry-to-formio
+name: CI
 
-# Install dependencies
-npm install xlsx pdfjs-dist mammoth tesseract.js file-saver
+on:
+  push:
+    branches:
+      - main
+  pull_request:
 
-# Use Codex in this repo
-npm i -g @openai/codex
-codex
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
 
-# After Codex has generated and refined the project
-npm test
-npm run build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-# Publish to GitHub
-# Option A: GitHub CLI
-gh repo create evry-to-formio --public --source=. --remote=origin --push
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test -- --watch=false --browsers=ChromeHeadless
+
+      - name: Build
+        run: npm run build -- --configuration production
