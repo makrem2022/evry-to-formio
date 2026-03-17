@@ -23,8 +23,7 @@ index 18d796738f2f313265d95aa0c1a5abf008aca1f7..b537b6b37dec5e525a5a1553017b65cc
 -npm test
 -npm run build
 
--# Publish to GitHub
--# Option A: GitHub CLI
+
 -gh repo create evry-to-formio --public --source=. --remote=origin --push
 
  
