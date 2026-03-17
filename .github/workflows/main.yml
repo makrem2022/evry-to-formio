@@ -8,7 +8,7 @@ index 18d796738f2f313265d95aa0c1a5abf008aca1f7..b537b6b37dec5e525a5a1553017b65cc
 -npm install -g @angular/cli
 -ng new evry-to-formio --standalone --routing --style=scss
 -cd evry-to-formio
-+name: CI
+
  
 -# Install dependencies
 -npm install xlsx pdfjs-dist mammoth tesseract.js file-saver
